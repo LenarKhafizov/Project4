@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+import static jdk.nashorn.internal.objects.NativeString.toLowerCase;
+
 public class Main {
     public static void printList(ArrayList<String> list) {
         System.out.println("Ваш список покупок:");
@@ -13,9 +15,9 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             System.out.println("Вам доступны операции:");
-            System.out.println("\t 1 - Добавить. 2 - Показать покупки. 3 - Удалить. end - Завершить.");
+            System.out.println("\t 1 - Добавить. 2 - Показать покупки. 3 - Удалить. 4 - Найти. 0 - Завершить.");
             String line = scanner.nextLine();
-            if ("end".equals(line)) {
+            if ("0".equals(line)) {
                 break;
             }
             int operationNum = Integer.parseInt(line);
@@ -30,7 +32,7 @@ public class Main {
             }
             if (operationNum == 3) {
                 printList(purchaseList);
-                System.out.println("Какую хотите удалить? Введите номер или название покупки.");
+                System.out.println("Какую хотите удалить? Введите номер или название покупки:");
                 String purchase = scanner.nextLine();
                 if (purchaseList.remove(purchase)) {
                     System.out.println("Покупка " + purchase + " удалена.");
@@ -50,6 +52,18 @@ public class Main {
                     }
                     catch (NumberFormatException e) {
                         System.out.println("Покупка c наименованием " + purchase + " отсутствует.");
+                    }
+                }
+            }
+            if (operationNum == 4) {
+                System.out.println("Введите текст для поиска:");
+                String item = scanner.nextLine();
+                String itemLower = toLowerCase(item);
+                System.out.println("\t Найдено:");
+                for (int i = 0; i < purchaseList.size(); i++) {
+                    String purchaseLower = toLowerCase(purchaseList.get(i));
+                    if (purchaseLower.contains(itemLower)) {
+                        System.out.println((i + 1) + ". " + purchaseList.get(i));
                     }
                 }
             }
