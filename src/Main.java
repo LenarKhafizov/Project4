@@ -1,16 +1,14 @@
 import java.util.ArrayList;
 import java.util.Scanner;
-
 public class Main {
-
-    public static void print (ArrayList<String> purchaseList) {
+    public static void printList(ArrayList<String> list) {
         System.out.println("Ваш список покупок:");
-        for (int i = 0; i < purchaseList.size(); i++) {
-            System.out.println("\t" + (i +1) + ". " + purchaseList.get(i));
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println("\t" + (i + 1) + ". " + list.get(i));
         }
     }
     public static void main(String[] args) {
-        System.out.println("Программа подготовки списка продуктов");
+        System.out.println("\t Программа подготовки списка продуктов.");
         ArrayList<String> purchaseList = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
         while (true) {
@@ -28,32 +26,32 @@ public class Main {
                 System.out.println("Итого в списке покупок " + purchaseList.size() + " наименования(-е,-й).");
             }
             if (operationNum == 2) {
-                print(purchaseList);
+                printList(purchaseList);
             }
             if (operationNum == 3) {
-                print(purchaseList);
+                printList(purchaseList);
                 System.out.println("Какую хотите удалить? Введите номер или название покупки.");
                 String purchase = scanner.nextLine();
-
                 if (purchaseList.remove(purchase)) {
                     System.out.println("Покупка " + purchase + " удалена.");
-                    print(purchaseList);
-                    continue; // added
+                    printList(purchaseList);
                 }
                 else {
-                    int purchaseNum = Integer.parseInt(purchase);
-                    if ((purchaseNum > 0) & (purchaseNum <= purchaseList.size())) {
-                        purchaseList.remove(purchaseNum - 1);
-                        System.out.println("Покупка с номером " + purchaseNum + " удалена.");
-                        print(purchaseList);
-                        continue;
+                    try {
+                        int purchaseNum = Integer.parseInt(purchase);
+                        if ((purchaseNum > 0) & (purchaseNum <= purchaseList.size())) {
+                            purchaseList.remove(purchaseNum - 1);
+                            System.out.println("Покупка с номером " + purchaseNum + " удалена.");
+                            printList(purchaseList);
+                        }
+                        else {
+                            System.out.println("Покупка c номером " + purchaseNum + " отсутствует.");
+                        }
                     }
-                    else {
-                        System.out.println("Покупка c номером " + purchaseNum + " отсутствует.");
-                        continue;
+                    catch (NumberFormatException e) {
+                        System.out.println("Покупка c наименованием " + purchase + " отсутствует.");
                     }
                 }
-                //System.out.println("Покупка c наименованием " + purchase + " отсутствует.");
             }
             System.out.println();
         }
